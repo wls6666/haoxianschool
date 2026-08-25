@@ -12,7 +12,7 @@ $('#visits').textContent = (286419 + Math.floor(Math.random() * 43)).toLocaleStr
 function unlock(id) { if (!state.clues.has(id)) { state.clues.add(id); remember(); } }
 function read(id) { state.seen.add(id); remember(); }
 function flag(id, value=true) { state.flags[id]=value; remember(); }
-function go(path) { location.hash = path; }
+function go(path) { if (canOpen(path)) location.hash = path; }
 function canOpen(path) {
   const gates = {
     'article/sport':()=>state.clues.has('code'), 'student/HX2020-03219':()=>state.clues.has('code'), 'article/transfer':()=>state.clues.has('identity'), 'article/day':()=>state.clues.has('transfer'), 'article/exit':()=>state.clues.has('day'), 'archive/A-20200317-07':()=>state.clues.has('access'),
@@ -300,6 +300,7 @@ function render(){
 }
 function submitSearch(value){ const q=value.trim(); if(q){ dialog.close(); go('search/'+encodeURIComponent(q)); } }
 function bindPage(){
+  document.querySelectorAll('a[data-route]').forEach(el=>el.addEventListener('click',e=>{ const path=(el.getAttribute('href')||'').replace(/^#/,''); if(path && !canOpen(path)) e.preventDefault(); }));
   $('#inlineSubmit')?.addEventListener('click',()=>submitSearch($('#inlineSearch').value));
   $('#inlineSearch')?.addEventListener('keydown',e=>{if(e.key==='Enter') submitSearch(e.currentTarget.value)});
   document.querySelectorAll('[data-search]').forEach(el=>el.addEventListener('click',()=>{ input.value=el.dataset.search; dialog.showModal(); input.focus(); }));
