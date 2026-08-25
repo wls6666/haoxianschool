@@ -124,7 +124,7 @@ function action(name){
   if(name==='ending-remove' && !state.flags.ending){ flag('ending','remove'); render(); }
 }
 
-const result = (title, date, summary, target) => `<article class="result-item"><h2><a href="#${target}" data-route>${title}</a></h2><div class="meta">发布时间：${date}</div><p>${summary}</p></article>`;
+const result = (title, date, summary, target = '') => `<article class="result-item"><h2>${target ? `<a href="#${target}" data-route>${title}</a>` : title}</h2><div class="meta">发布时间：${date}</div><p>${summary}</p></article>`;
 function searchPage(raw) {
   const q = decodeURIComponent(raw || '').trim(); const has = id => state.clues.has(id);
   let items=[];
@@ -133,27 +133,27 @@ function searchPage(raw) {
       result('我校学生在2019年沪市青少年艺术展演中取得佳绩','2019-05-24','……初二（2）班<em class="keyword">叶紫贤</em>、初二（4）班周若宁等同学在本届艺术展演中表现突出……','article/art'),
       result('2019学年度第一学期优秀学生表彰名单','2020-01-07','……初三（2）班<em class="keyword">叶紫贤</em>、陈子墨、王雨桐等同学获得“学习进步之星”……','article/awards'),
       result('2020届初三年级毕业生信息确认通知','2020-06-18','……请<em class="keyword">叶紫贤</em>、王雨桐、陈子墨等同学核对个人毕业信息……','article/graduate'),
-      result('关于部分历史页面调整的说明','2020-07-02','……近期学校网站进行历史数据整理，部分涉及<em class="keyword">叶紫贤</em>等已离校学生的信息将不再展示……','article/deleted')
+      result('关于部分历史页面调整的说明','2020-07-02','……近期学校网站进行历史数据整理，部分涉及<em class="keyword">叶紫贤</em>等已离校学生的信息将不再展示……')
     ];
     if(has('access')) items.push(result('2020年3月17日初三年级异常情况登记','—','……初三（2）班一名学生放学后未按规定离校，班主任已联系家长……','archive/A-20200317-07'));
   } else if (/HX2020-03219/.test(q) && !/(EXIT|离校|2021)/.test(q)) {
-    if(has('code') || has('identity')) items=[result('2019年秋季运动会成绩汇总','2019-10-18','……<em class="keyword">HX2020-03219 叶紫贤</em>，女子800米第二名……','article/sport'),result('图书馆旧账号迁移异常记录','2020-03-21','……<em class="keyword">HX2020-03219</em>：原学生记录不存在，历史借阅记录保留……','student/HX2020-03219')];
+    if(has('code') || has('identity')) items=[result('2019年秋季运动会成绩汇总','2019-10-18','……<em class="keyword">HX2020-03219 叶紫贤</em>，女子800米第二名……','article/sport'),result('图书馆旧账号迁移异常记录','2020-03-21','……<em class="keyword">HX2020-03219</em>：原学生记录不存在，历史借阅记录保留……')];
   } else if (/转学|学籍/.test(q)) {
-    if(has('identity')) items=[result('2020年春季学籍变动情况汇总','2020-03-18','……<em class="keyword">HX2020-03219</em>　转出……','article/transfer'),result('2020届学生学籍备注','2020-06-22','……叶紫贤，学籍状态：转出，原因：家庭原因……','article/transfer')];
+    if(has('identity')) items=[result('2020年春季学籍变动情况汇总','2020-03-18','……<em class="keyword">HX2020-03219</em>　转出……','article/transfer'),result('2020届学生学籍备注','2020-06-22','……叶紫贤，学籍状态：转出，原因：家庭原因……')];
   } else if (/2020.?03.?17|3月17/.test(q)) {
-    if(has('transfer')) items=[result('校园门禁历史数据','历史系统导出','……2020-03-17 08:03:14　CARD：<em class="keyword">HX2020-03219</em>　ENTRY……','article/day'),result('初三年级晚自习异常情况登记','2020-03-17','……初三（2）班应到42，实到41，请假0……','article/day')];
+    if(has('transfer')) items=[result('校园门禁历史数据','历史系统导出','……2020-03-17 08:03:14　CARD：<em class="keyword">HX2020-03219</em>　ENTRY……','article/day'),result('初三年级晚自习异常情况登记','2020-03-17','……初三（2）班应到42，实到41，请假0……')];
   } else if (/学生异常离校/.test(q)) {
-    if(has('entry')) items=[result('关于进一步加强学生离校登记管理的通知','2018-09-03','……住宿学生如因特殊情况提前离校，须完成班主任、年级组及门卫登记……','article/开学'),result('2016年校园安全工作会议纪要','2016-10-14','……进一步规范学生异常离校、请假和家长接送登记制度……','article/practice'),result('初中部学生考勤系统升级说明','2013-02-18','……针对迟到、早退、请假及异常离校情况进行统一记录……','article/library'),result('2012年11月学生事务情况汇总','2012-11-09','……一名学生出现连续缺勤及异常离校情况，相关学籍手续已完成……','archive/2012-summary')];
+    if(has('entry')) items=[result('关于进一步加强学生离校登记管理的通知','2018-09-03','……住宿学生如因特殊情况提前离校，须完成班主任、年级组及门卫登记……'),result('2016年校园安全工作会议纪要','2016-10-14','……进一步规范学生异常离校、请假和家长接送登记制度……'),result('初中部学生考勤系统升级说明','2013-02-18','……针对迟到、早退、请假及异常离校情况进行统一记录……'),result('2012年11月学生事务情况汇总','2012-11-09','……一名学生出现连续缺勤及异常离校情况，相关学籍手续已完成……','archive/2012-summary')];
   } else if (/唐珞|HX12-0241/.test(q)) {
-    if(has('tang-name')) items=[result('2011学年校园广播站成员名单','2011-09-12','……初一（4）班<em class="keyword">唐珞</em>、许曼、赵启辰……','archive/tang'),result('我校学生参加2012年市青少年作文比赛','2012-05-22','……<em class="keyword">唐珞</em>同学作品《旧操场》获初中组优秀奖……','archive/tang'),result('2012年11月学籍变动汇总','2012-11-09','……<em class="keyword">唐珞</em>，初二（4）班，转出……','archive/2012-change-old')];
+    if(has('tang-name')) items=[result('唐珞历史记录汇总','2012年历史系统导出','……最后门禁记录位于综合楼，离校记录为空……','archive/tang'),result('2011学年校园广播站成员名单','2011-09-12','……初一（4）班<em class="keyword">唐珞</em>、许曼、赵启辰……'),result('我校学生参加2012年市青少年作文比赛','2012-05-22','……<em class="keyword">唐珞</em>同学作品《旧操场》获初中组优秀奖……'),result('2012年11月学籍变动汇总','2012-11-09','……<em class="keyword">唐珞</em>，初二（4）班，转出……','archive/2012-change-old')];
   } else if (/家庭搬迁|郑岚/.test(q)) {
-    if(has('tang-day')) items=[result('2004学年学生异动情况备案','2004-04-16','……初二（3）班<em class="keyword">郑岚</em>因家庭原因办理离校手续……','archive/zheng'),result('2012年11月学生事务情况汇总','2012-11-09','……唐珞，原因：家庭搬迁，接收学校：—……','archive/tang')];
+    if(has('tang-day')) items=[result('2004学年学生异动情况备案','2004-04-16','……初二（3）班<em class="keyword">郑岚</em>因家庭原因办理离校手续……','archive/zheng'),result('2012年11月学生事务情况汇总','2012-11-09','……唐珞，原因：家庭搬迁，接收学校：—……')];
   } else if (/综合楼/.test(q)) {
-    if(has('tang-day')) items=[result('关于综合楼临时检修的通知','2012-11-06','……因综合楼部分线路出现异常，为保障师生安全，部分区域暂时停止使用……','archive/tang'),result('2004学年学生异动情况备案','2004-04-16','……郑岚最后一条校园卡记录位于综合楼；次日学校发布消防设施维修通知……','archive/zheng')];
+    if(has('tang-day')) items=[result('关于综合楼临时检修的通知','2012-11-06','……因综合楼部分线路出现异常，为保障师生安全，部分区域暂时停止使用……'),result('2004学年学生异动情况备案','2004-04-16','……郑岚最后一条校园卡记录位于综合楼；次日学校发布消防设施维修通知……','archive/zheng')];
   } else if (/学生离校|历届转学生|转出.*接收|接收.*转出/.test(q)) {
     if(has('pattern')) items=[result('1994年度学生学籍异动登记','1994-09-23','……许明川，初二甲班，离校，去向未记……','archive/xu'),result('1987年秋季学生变动登记','1987-10-12','……陈惠兰，初二乙班，因家事离校，手续缺……','archive/chen')];
   } else if (/许明川/.test(q)) {
-    if(has('pattern')) items=[result('1994年度学生学籍异动登记','1994-09-23','……<em class="keyword">许明川</em>，初二甲班，离校，去向未记……','archive/xu'),result('好贤校讯 1994年第3期','1994-06-15','……初二甲班许明川同学在市中学生数学竞赛中获得三等奖……','archive/xu')];
+    if(has('pattern')) items=[result('1994年度学生学籍异动登记','1994-09-23','……<em class="keyword">许明川</em>，初二甲班，离校，去向未记……','archive/xu'),result('好贤校讯 1994年第3期','1994-06-15','……初二甲班许明川同学在市中学生数学竞赛中获得三等奖……')];
   } else if (/陈惠兰/.test(q)) {
     if(has('pattern')) items=[result('1987年秋季学生变动登记','1987-10-12','……<em class="keyword">陈惠兰</em>，初二乙班，因家事离校……','archive/chen')];
   } else if (/校史大事记|失踪 获利|学校发展/.test(q)) {
@@ -161,7 +161,7 @@ function searchPage(raw) {
   } else if (/^B1$|综合楼 B1|ZHL-ARCHIVE-01/.test(q)) {
     if(has('pattern') || has('benefit')) items=[result('综合楼旧服务器设备维护记录','2016-06-14','……ZHL-ARCHIVE-01，位置：综合楼旧档案区，备注：B1网络条件较差……','archive/b1')];
   } else if (/好贤义塾|校董旧账|旧例|历史办法|财势/.test(q)) {
-    if(has('pattern')) items=[result('好贤义塾旧档案整理说明','2008-10-16','……部分账册、学生名簿及校董会议记录存在缺页或字迹不清情况……','archive/ledger-yi'),result('好贤百年：从义塾到现代学校','2008-10-16','……百余年来，学校多次经历危机，却总能化险为夷、重新发展……','archive/timeline')];
+    if(has('pattern')) items=[result('好贤义塾旧档案整理说明','2008-10-16','……部分账册、学生名簿及校董会议记录存在缺页或字迹不清情况……'),result('1931年杂项账册','民国二十年','……秋后银元若干，修西屋。另奉一……','archive/ledger-yi'),result('好贤百年：从义塾到现代学校','2008-10-16','……百余年来，学校多次经历危机，却总能化险为夷、重新发展……')];
   } else if (/^奉$/.test(q)) {
     if(has('pattern')) items=[result('1931年杂项账册','民国二十年','……秋后银元若干，修西屋。另奉一……','archive/ledger-yi')];
   } else if (/奉一/.test(q)) {
@@ -187,7 +187,7 @@ function searchPage(raw) {
   } else if (/奉生之后|返声|返字|返影|^返$/.test(q)) {
     if(has('return')) items=[result('奉生后异常记录汇总','历史档案','……有返声者，有返字者，有返影者。皆不可应……','archive/return')];
   } else if (/魖\s*寒|堂中先寒/.test(q)) {
-    if(has('cold')) items=[result('旧礼寒温残文','民国旧礼','……魖食之时，堂中先寒。夏亦如冬……','archive/well-depth')];
+    if(has('cold')) items=[result('旧礼寒温残文','民国旧礼','……魖食之时，堂中先寒。夏亦如冬……')];
   } else if (/方井|旧井/.test(q)) {
     if(has('hall')) items=[result('方井旧俗记录','民国旧礼','……魖堂无像。堂中一牌，一桌，一井。井方。不得照……','archive/xu-well')];
   } else if (/R0\s*(SAFETY|安全)|安全维护|维修锁/.test(q)) {
@@ -218,11 +218,11 @@ function searchPage(raw) {
   } else if (/魖.*在籍|在籍.*魖/.test(q)) {
     if(has('lin-detail')) items=[result('当前学生档案','当前学生系统','……姓名：魖；状态：在籍；最后访问：刚刚……','archive/xu-student')];
   } else if (/魖/.test(q)) {
-    if(has('xu')) items=[result('贤塘旧俗摘录','清末抄本','……乡人谓之<em class="keyword">魖</em>，不祀而养……','archive/xu-folklore'),result('好贤义塾杂记','1911','……塾成之后，旧魖之事仍依周氏所定……','archive/xu-raise'),result('校董杂录','1930','……奉生一，奉于魖……','archive/minguo'),result('1964年校舍修缮附记','1964','……魖堂不得动……','archive/xu-hall')];
+    if(has('xu')) items=[result('贤塘旧俗摘录','清末抄本','……乡人谓之<em class="keyword">魖</em>，不祀而养……','archive/xu-folklore'),result('好贤义塾杂记','1911','……塾成之后，旧魖之事仍依周氏所定……'),result('校董杂录','1930','……奉生一，奉于魖……'),result('1964年校舍修缮附记','1964','……魖堂不得动……','archive/xu-hall')];
   } else if (/EXIT|离校/.test(q)) {
     if(has('day')) items=[result('旧门禁综合查询','历史查询','……学生编号 HX2020-03219，离校记录：<em class="keyword">NULL</em>……','article/exit')];
   } else if (/1843/.test(q)) {
-    items=[result('关于3月18日初中部教学安排调整的通知','2020-03-18','……因综合楼设备维护及校园设施临时检查，今日部分课程调整……','article/deleted')];
+    items=[result('关于3月18日初中部教学安排调整的通知','2020-03-18','……因综合楼设备维护及校园设施临时检查，今日部分课程调整……')];
   }
   const content = items.length ? items.join('') : `<div class="empty">没有找到与“${q || '—'}”相关的内容。<br><small>请检查关键词，或继续浏览网站资料。</small></div>`;
   return layout(`<div class="crumb">当前位置：首页 &gt; 站内搜索</div><section class="card"><h1 class="section-title">站内搜索</h1><div class="result-head">关键词：<b>${q || '—'}</b><span style="float:right">共找到 <b>${items.length}</b> 条相关内容</span></div>${content}</section>`);
