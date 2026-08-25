@@ -96,7 +96,17 @@ function linPage(){ unlock('lin-detail'); return article('2026年夏季田径测
 function linPlan(){ unlock('plan'); return layout(`<div class="crumb">当前位置：首页 &gt; 当前内部计划</div><section class="card article"><h1>学生事务特殊安排</h1><div class="article-meta">2026-08-27</div><div class="system-panel">15:40　正常放学\n16:10　通知目标前往综合楼\n　　　　理由：学生档案核对\n16:30　进入 B1\n17:00　R-0\n\n奉生：<b>已定</b>\n对象：HX2026-04127 / 林知遥\n除名：进行中</div><p class="article-body no-indent">同一流程与2020年几乎完全一致。</p><button class="system-action" data-action="message-lin">通过学生咨询系统提交提醒</button><div id="messageOutcome"></div></section>`); }
 function safetyPage(){ unlock('safety'); const done=state.flags.safety?'<div class="notice">R-0 门禁：<b>维修锁定</b>。奉生计划出现 ERROR；周敬川尝试 OVERRIDE，失败。<br>当前学生统计：2841 → 2843。<a href="#archive/xu-student" data-route>查看额外在籍记录</a></div>':''; return layout(`<div class="crumb">当前位置：首页 &gt; R-0维护控制</div><section class="card article"><h1>R-0 安全维护模式</h1><div class="article-meta">虚构设备维护界面</div><div class="system-panel">R-0 门禁需三人授权。\n供电来源：B1 配电柜。\n维护模式：R0 SAFETY LOCK\n状态：${state.flags.safety?'维修锁定':'可启用'}\n\n启用后：R-0 门禁进入维修锁定。\n说明：本页仅模拟游戏内虚构系统，不涉及真实设备。</div>${state.flags.safety?'':'<button class="system-action" data-action="safety">启用 SAFETY LOCK</button>'}${done}<div id="safetyOutcome"></div></section>`); }
 function requestPage(){ unlock('request'); const done=state.flags.withdrawn?'<div class="notice">所求：无　　奉生：无效　　对象：解除<br>林知遥：<span class="status-safe">SELECTED → ACTIVE</span><br>旧礼残句：所求既撤，已至之魖不可空归。<br><a href="#archive/final-choice" data-route>查看叶紫贤当前档案</a></div>':''; return layout(`<div class="crumb">当前位置：首页 &gt; 当前内部文件</div><section class="card article"><h1>所求书</h1><div class="article-meta">2026 旧例关联文件</div><div class="system-panel">求：${state.flags.withdrawn?'无':'好贤教育集团项目获准'}\n求：${state.flags.withdrawn?'—':'周氏持有权益得保'}\n求：${state.flags.withdrawn?'—':'校产增'}\n\n确认：周敬川\n状态：${state.flags.withdrawn?'已撤销':'有效'}\n\n旧礼：无求，则不得奉。</div><p class="article-body no-indent">系统保留“撤求”功能：供养者可在奉生完成前反悔。</p>${state.flags.withdrawn?'':'<button class="system-action danger" data-action="withdraw">撤销 2026 所求</button>'}${done}<div id="withdrawOutcome"></div></section>`); }
-function finalChoice(){ unlock('choice'); return layout(`<div class="crumb">当前位置：首页 &gt; 当前学生档案</div><section class="card article"><h1>HX2020-03219</h1><div class="article-meta">关联记录重建中</div><div class="system-panel">叶紫贤 session：在线 / 离线 / 在线\nSYSTEM NOTICE：<b>“快”</b>\nSYSTEM NOTICE：<b>“把我删掉”</b>\n\n无ID session：在线\n访问：HX2020-03219</div><p class="article-body no-indent">删除会切断当前恢复的关联索引，但不会真正删除游戏中的历史原始文件。</p><button class="system-action" data-action="ending-keep">保留叶紫贤的名字</button> <button class="system-action danger" data-action="ending-remove">删除当前关联索引</button><div id="endingOutcome"></div></section>`); }
+function finalChoice(){
+  unlock('choice');
+  const ending = state.flags.ending;
+  const outcome = ending === 'keep'
+    ? '<div class="notice">林知遥已脱离奉生。叶紫贤记录保持 ACTIVE。<br>OWNER：<b>魖</b><br>当前在线：2（你 / 无ID）。网站恢复正常。</div>'
+    : ending === 'remove'
+      ? '<div class="notice">关联记录：43 → 31 → 18 → 7 → 1 → 0<br>SYSTEM NOTICE：<b>“谢谢。”</b><br>叶紫贤 session 已退出。魖示：弱 → 无。林知遥保住了。</div>'
+      : '';
+  const actions = ending ? '' : '<button class="system-action" data-action="ending-keep">保留叶紫贤的名字</button> <button class="system-action danger" data-action="ending-remove">删除当前关联索引</button>';
+  return layout(`<div class="crumb">当前位置：首页 &gt; 当前学生档案</div><section class="card article"><h1>HX2020-03219</h1><div class="article-meta">关联记录重建中</div><div class="system-panel">叶紫贤 session：在线 / 离线 / 在线\nSYSTEM NOTICE：<b>“快”</b>\nSYSTEM NOTICE：<b>“把我删掉”</b>\n\n无ID session：在线\n访问：HX2020-03219</div><p class="article-body no-indent">删除会切断当前恢复的关联索引，但不会真正删除游戏中的历史原始文件。</p>${actions}<div id="endingOutcome">${outcome}</div></section>`);
+}
 function xuStudent(){ unlock('xuvisual'); return layout(`<div class="crumb">当前位置：首页 &gt; 当前学生系统 &gt; 档案详情</div><section class="card article"><h1>学生档案</h1><div class="article-meta">查询结果</div><img class="xu-image" src="./assets/xu-hall.png" alt="昏暗魖堂中，方井、黑桌与面部悬着魖字的人形" /><p class="image-caption">档案预览图：来源字段缺失</p><div class="system-panel">姓名：<b>魖</b>\n学号：—\n入学时间：—\n毕业时间：—\n班级：—\n状态：<b>在籍</b>\n最后访问：刚刚</div><p class="article-body no-indent">刷新后，这个档案将不再存在。</p>${state.flags.burst6?'':'<button class="system-action danger" data-action="burst6">查看访问详情</button>'}</section>`); }
 function triggerAnomaly(kind){
   const layer=$('#anomalyLayer'); if(!layer) return; const strong=kind==='six'; const texts=strong?['奉一','还差一个','在册','不要叫名字','魖示：已至','归','叶紫贤不是名字','魖']:(kind==='five'?['不要回答','它已经来了','在线','归','叶紫贤','别让她进去']:['不要找她','不要叫她','不要让她回来','她已经归了']);
@@ -110,8 +120,8 @@ function action(name){
   if(name==='message-lin'){ flag('message'); $('#messageOutcome').innerHTML='<div class="notice">留言审核中……　已删除。后台关键词拦截：综合楼。<br><span class="online">HX2020-03219 搜索：门 → 电 → R0</span></div>'; }
   if(name==='safety' && !state.flags.safety){ flag('safety'); render(); }
   if(name==='withdraw' && !state.flags.withdrawn){ flag('withdrawn'); render(); }
-  if(name==='ending-keep'){ flag('ending','keep'); $('#endingOutcome').innerHTML='<div class="notice">林知遥已脱离奉生。叶紫贤记录保持 ACTIVE。<br>OWNER：<b>魖</b><br>当前在线：2（你 / 无ID）。网站恢复正常。</div>'; }
-  if(name==='ending-remove'){ flag('ending','remove'); $('#endingOutcome').innerHTML='<div class="notice">关联记录：43 → 31 → 18 → 7 → 1 → 0<br>SYSTEM NOTICE：<b>“谢谢。”</b><br>叶紫贤 session 已退出。魖示：弱 → 无。林知遥保住了。</div>'; }
+  if(name==='ending-keep' && !state.flags.ending){ flag('ending','keep'); render(); }
+  if(name==='ending-remove' && !state.flags.ending){ flag('ending','remove'); render(); }
 }
 
 const result = (title, date, summary, target) => `<article class="result-item"><h2><a href="#${target}" data-route>${title}</a></h2><div class="meta">发布时间：${date}</div><p>${summary}</p></article>`;
