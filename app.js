@@ -219,7 +219,7 @@ function searchPage(raw) {
     if(has('lin-detail')) items=[result('当前学生档案','当前学生系统','……姓名：魖；状态：在籍；最后访问：刚刚……','archive/xu-student')];
   } else if (/魖/.test(q)) {
     if(has('xu')) items=[result('贤塘旧俗摘录','清末抄本','……乡人谓之<em class="keyword">魖</em>，不祀而养……','archive/xu-folklore'),result('好贤义塾杂记','1911','……塾成之后，旧魖之事仍依周氏所定……'),result('校董杂录','1930','……奉生一，奉于魖……'),result('1964年校舍修缮附记','1964','……魖堂不得动……','archive/xu-hall')];
-  } else if (/EXIT|离校/.test(q)) {
+  } else if (/EXIT|离校|NULL/.test(q)) {
     if(has('day')) items=[result('旧门禁综合查询','历史查询','……学生编号 HX2020-03219，离校记录：<em class="keyword">NULL</em>……','article/exit')];
   } else if (/1843/.test(q)) {
     items=[result('关于3月18日初中部教学安排调整的通知','2020-03-18','……因综合楼设备维护及校园设施临时检查，今日部分课程调整……')];
