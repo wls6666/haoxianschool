@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>沪市好贤学校</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./oldsite.css" />
+    <link rel="stylesheet" href="./horror.css" />
+  </head>
+  <body>
+    <div class="topline"><div class="shell topline-inner"><span>沪市基础教育信息公开平台 · 学校网站群</span><span id="today"></span></div></div>
+    <header class="site-header shell">
+      <a class="brand" href="#home" data-route="home" aria-label="返回首页"><span class="seal">贤</span><span><strong>沪市好贤学校</strong><small>HAOXIAN SCHOOL</small></span></a>
+      <div class="header-tools"><label class="motion-toggle"><input id="reduceMotion" type="checkbox"> 降低闪烁效果</label><a href="#contact" data-route="contact">联系我们</a><span>|</span><a href="#sitemap" data-route="sitemap">网站地图</a></div>
+    </header>
+    <nav class="main-nav"><div class="shell"><a href="#home" data-route="home">学校首页</a><a href="#about" data-route="about">学校概况</a><a href="#news" data-route="news">新闻中心</a><a href="#teaching" data-route="teaching">教育教学</a><a href="#faculty" data-route="faculty">师资队伍</a><a href="#students" data-route="students">学生天地</a><a href="#admission" data-route="admission">招生信息</a><a href="#disclosure" data-route="disclosure">校务公开</a><a href="#history" data-route="history">校史馆</a><a href="#downloads" data-route="downloads">资料下载</a></div></nav>
+    <main id="app" class="shell"></main>
+    <footer><div class="shell footer-grid"><div><strong>沪市好贤学校</strong><p>地址：沪市静安区文河路218号　邮编：200041</p><p>电话：021-6588 2048　招生咨询：021-6588 2019</p></div><div class="footer-right"><p>版权所有 © 2026 沪市好贤学校</p><p>沪ICP备 16021108号-1　网站访问量 <span id="visits">286,419</span></p></div></div></footer>
+    <dialog id="searchDialog"><form method="dialog" class="search-dialog"><button class="dialog-close" value="cancel" aria-label="关闭">×</button><label for="searchInput">站内搜索</label><div><input id="searchInput" autocomplete="off" placeholder="请输入关键词" /><button id="searchSubmit" value="default">搜索</button></div><p class="search-hint">请使用完整姓名、学号或已获得的关键词检索网站内容。</p><div id="suggestions"></div></form></dialog>
+    <button id="searchTrigger" class="search-float" aria-label="站内搜索"><span>⌕</span> 站内搜索</button>
+    <div id="anomalyLayer" aria-live="assertive"></div>
+    <script src="./app.js"></script>
+  </body>
+</html>
